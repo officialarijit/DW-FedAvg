@@ -12,7 +12,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
-
+from sklearn.metrics import roc_auc_score
 
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
@@ -23,6 +23,7 @@ from tensorflow.keras.layers import Flatten
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras import backend as K
+
 
 
 
@@ -148,12 +149,12 @@ def test_model(X_test, Y_test,  model, comm_round):
     loss = bce(Y_test, logits)
     Y_prdt=np.where(logits > 0.5, 1, 0)
     acc = accuracy_score(Y_test, Y_prdt)
-    F1=f1_score(Y_test, Y_prdt)
-    precision=precision_score(Y_test, Y_prdt)
-    recall=recall_score(Y_test, Y_prdt)
+    F1=f1_score(Y_test, Y_prdt, zero_division=1)
+    precision=precision_score(Y_test, Y_prdt, zero_division=1)
+    recall=recall_score(Y_test, Y_prdt, zero_division=1)
     
-    fpr, tpr, thresholds = metrics.roc_curve(Y_test, Y_prdt, pos_label=2)
-    auc_value = metrics.auc(fpr, tpr)
+    fpr, tpr, thresholds = metrics.roc_curve(Y_test, logits, pos_label=2)
+    auc_value = roc_auc_score(Y_test, logits)
     
     print('comm_round: {} | global_acc: {:.3%} | global_loss: {} | global_f1: {} | global_precision: {} | global_recall: {} | global_auc: {} '.format(comm_round, acc, loss, F1, precision, recall, auc_value))
     return acc, loss, F1, precision, recall, auc_value
