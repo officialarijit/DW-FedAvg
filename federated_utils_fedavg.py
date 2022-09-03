@@ -27,8 +27,6 @@ from tensorflow.keras import backend as K
 
 
 
-
-
 # def load(paths, verbose=-1):
 #     '''expects images for each class in seperate dir, 
 #     e.g all digits in 0 class in the directory named 0 '''
@@ -128,11 +126,7 @@ def scale_model_weights(weight, scalar):
 
 
 
-def sum_scaled_weights(scaled_weight_list, importance_index):
-    
-    for i in range(0,len(importance_index)):
-        temp=scale_model_weights(scaled_weight_list[i], importance_index[0][i])
-        scaled_weight_list[i]=temp
+def sum_scaled_weights(scaled_weight_list):
     '''Return the sum of the listed scaled weights. The is equivalent to scaled avg of the weights'''
     avg_grad = list()
     #get the average grad accross all client gradients
