@@ -7,7 +7,13 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.utils import shuffle
+from sklearn import metrics
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import roc_auc_score
+
 
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
@@ -135,6 +141,16 @@ def test_model(X_test, Y_test,  model, comm_round):
     bce = tf.keras.losses.BinaryCrossentropy(from_logits=True)
     logits = model.predict(X_test)
     loss = bce(Y_test, logits)
-    acc = accuracy_score(Y_test, np.where(logits > 0.5, 1, 0))
-    print('comm_round: {} | global_acc: {:.3%} | global_loss: {}'.format(comm_round, acc, loss))
-    return acc, loss
+    Y_prdt=np.where(logits > 0.5, 1, 0)
+    Y_test  = Y_test.numpy() #converting Y_true from Tenosr to Numpy
+    acc = accuracy_score(Y_test, Y_prdt)
+    F1=f1_score(Y_test, Y_prdt, zero_division=1)
+    precision=precision_score(Y_test, Y_prdt, zero_division=1)
+    recall=recall_score(Y_test, Y_prdt, zero_division=1)
+    
+    fpr, tpr, thresholds = metrics.roc_curve(Y_test, logits, pos_label=2)
+    auc_value = roc_auc_score(Y_test, logits)
+    
+    print('comm_round: {} | global_acc: {:.3%} | global_loss: {} | global_f1: {} | global_precision: {} | global_recall: {} | global_auc: {} '.format(comm_round, acc, loss, F1, precision, recall, auc_value))
+    return acc, loss, F1, precision, recall, auc_value
+
