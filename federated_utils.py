@@ -13,6 +13,8 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import roc_auc_score
+from sklearn.metrics import confusion_matrix
+
 
 
 import tensorflow as tf
@@ -154,9 +156,17 @@ def test_model(X_test, Y_test,  model, comm_round):
     precision=precision_score(Y_test, Y_prdt, zero_division=1)
     recall=recall_score(Y_test, Y_prdt, zero_division=1)
     
-    fpr, tpr, thresholds = metrics.roc_curve(Y_test, logits, pos_label=2)
+    fpr, tpr, thresholds = metrics.roc_curve(Y_test, logits)
     auc_value = roc_auc_score(Y_test, logits)
     
-    print('comm_round: {} | global_acc: {:.3%} | global_loss: {} | global_f1: {} | global_precision: {} | global_recall: {} | global_auc: {} '.format(comm_round, acc, loss, F1, precision, recall, auc_value))
-    return acc, loss, F1, precision, recall, auc_value
+    cm = confusion_matrix(Y_test, Y_prdt)
+    TP = cm[0][0]
+    FN = cm[0][1]
+    FP = cm[1][0]
+    TN = cm[1][1]
+    TPR = TP/(TP+FN)
+    FPR = FP/(FP+TN)
+    
+    print('comm_round: {} | global_acc: {:.3%} | global_loss: {} | global_f1: {} | global_precision: {} | global_recall: {} | global_auc: {}| flobal_FPR: {} '.format(comm_round, acc, loss, F1, precision, recall, auc_value, FPR))
+    return acc, loss, F1, precision, recall, auc_value, FPR
 
