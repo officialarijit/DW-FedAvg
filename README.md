@@ -45,23 +45,27 @@ Android malware attacks are increasing daily at a tremendous volume, making Andr
 
 # Cite this work: 
 ```
-Chaudhuri, A., Nandi, A., Pradhan, B. (2023). A Dynamic Weighted Federated Learning for Android Malware Classification. In Soft Computing: Theories and Applications. Lecture Notes in Networks and Systems, vol 627. Springer, Singapore. https://doi-org./10.1007/978-981-19-9858-4_13
+		Chaudhuri, A., Nandi, A., Pradhan, B. (2023). 
+		A Dynamic Weighted Federated Learning for Android Malware Classification. 
+		In Soft Computing: Theories and Applications. 
+		Lecture Notes in Networks and Systems, vol 627. Springer, Singapore. 
+		https://doi-org./10.1007/978-981-19-9858-4_13
 ```
 `OR`
 
 `BIBTEX`
 
     @InProceedings{dw-fedavg,
-	author="Chaudhuri, Ayushi
-	and Nandi, Arijit
-	and Pradhan, Buddhadeb",
-	title="A Dynamic Weighted Federated Learning for Android Malware Classification",
-	booktitle="Soft Computing: Theories and Applications",
-	year="2023",
-	publisher="Springer Nature Singapore",
-	address="Singapore",
-	pages="147--159",
-	isbn="978-981-19-9858-4"
+		author="Chaudhuri, Ayushi
+		and Nandi, Arijit
+		and Pradhan, Buddhadeb",
+		title="A Dynamic Weighted Federated Learning for Android Malware Classification",
+		booktitle="Soft Computing: Theories and Applications",
+		year="2023",
+		publisher="Springer Nature Singapore",
+		address="Singapore",
+		pages="147--159",
+		isbn="978-981-19-9858-4"
 	}
 
 
